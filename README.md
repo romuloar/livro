@@ -87,7 +87,7 @@ livro/
 │   │   ├── Livro.Infra.EfCore/     # EF Core, Adapters, Migrations
 │   │   ├── Livro.Presentation.Api/ # Controllers REST
 │   │   └── Livro.Presentation.Hosting/ # DI, Startup
-│   ├── test/               # 54 testes unitários
+│   ├── test/               # testes unitários
 │   └── Dockerfile
 │
 ├── livro_presentation_angular/  # Frontend Angular 19
