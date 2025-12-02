@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Livros</h4>
+      <button class="btn btn-light btn-sm" routerLink="/livros/novo">
+        <i class="bi bi-plus-circle"></i> Novo Livro
+      </button>
+    </div>
+    <div class="card-body">
+      <div *ngIf="loading()" class="text-center py-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading() && error()" class="alert alert-danger">{{ error() }}</div>
+
+      <div *ngIf="!loading()" class="table-responsive">
+        <table *ngIf="livros().length > 0" class="table table-striped table-hover">
+          <thead>
+            <tr> 
+              <th>Código</th>
+              <th>Título</th>
+              <th>Editora</th>
+              <th>Edição</th>
+              <th>Ano</th>
+              <th class="text-end">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let livro of livros()">
+              <td>{{ livro.codl }}</td>
+              <td>{{ livro.titulo }}</td>
+              <td>{{ livro.editora }}</td>
+              <td>{{ livro.edicao }}</td>
+              <td>{{ livro.anoPublicacao }}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-primary me-2" [routerLink]="['/livros/editar', livro.codl]">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteLivro(livro.codl)">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="livros().length === 0 && !error()" class="alert alert-info">
+          <i class="bi bi-info-circle me-2"></i>
+          Nenhum livro cadastrado.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

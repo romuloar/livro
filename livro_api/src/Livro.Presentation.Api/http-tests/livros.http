@@ -1,0 +1,244 @@
+### Variáveis
+@baseUrl = http://localhost:5000
+@livroId = "01KBE7APRCWMNRJN7427JK9QXA" 
+
+###/{{createLivro.response.body.codl}}
+
+### ⚠️ IMPORTANTE: Execute primeiro os arquivos autores.http e assuntos.http
+### para criar os dados necessários antes de criar livros
+
+### ============================================
+### LIVROS
+### ============================================
+
+### 1. Criar Livro - Dom Casmurro
+# @name createLivro
+# NOTA: Substitua os IDs pelos retornados das requisições de Autores e Assuntos
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Dom Casmurro",
+  "editora": "Editora Ática",
+  "edicao": 1,
+  "anoPublicacao": "1899",
+  "autoresIds": [
+    "AUTOR_ID_AQUI"
+  ],
+  "assuntosIds": [
+    "ASSUNTO_ID_AQUI"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_BALCAO",
+      "valor": 45.90
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_INTERNET",
+      "valor": 39.90
+    }
+  ]
+}
+
+### 2. Criar Livro - A Hora da Estrela
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "A Hora da Estrela",
+  "editora": "Rocco",
+  "edicao": 1,
+  "anoPublicacao": "1977",
+  "autoresIds": [
+    "AUTOR_ID_CLARICE"
+  ],
+  "assuntosIds": [
+    "ASSUNTO_ID_FICCAO",
+    "ASSUNTO_ID_ROMANCE"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_BALCAO",
+      "valor": 38.50
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_INTERNET",
+      "valor": 32.90
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_SELFSERVICE",
+      "valor": 35.00
+    }
+  ]
+}
+
+### 3. Criar Livro - O Alquimista
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "O Alquimista",
+  "editora": "HarperCollins",
+  "edicao": 2,
+  "anoPublicacao": "1988",
+  "autoresIds": [
+    "AUTOR_ID_PAULO_COELHO"
+  ],
+  "assuntosIds": [
+    "ASSUNTO_ID_FICCAO",
+    "ASSUNTO_ID_AUTOAJUDA"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_BALCAO",
+      "valor": 42.00
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_INTERNET",
+      "valor": 35.90
+    }
+  ]
+}
+
+### 4. Criar Livro - Capitães da Areia
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Capitães da Areia",
+  "editora": "Companhia das Letras",
+  "edicao": 3,
+  "anoPublicacao": "1937",
+  "autoresIds": [
+    "AUTOR_ID_JORGE_AMADO"
+  ],
+  "assuntosIds": [
+    "ASSUNTO_ID_FICCAO",
+    "ASSUNTO_ID_LITERATURA_BRASILEIRA"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_BALCAO",
+      "valor": 48.90
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_INTERNET",
+      "valor": 42.50
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_TELEFONE",
+      "valor": 46.00
+    }
+  ]
+}
+
+### 5. Listar Todos os Livros
+GET {{baseUrl}}/api/livro
+
+### 6. Buscar Livro por ID
+GET {{baseUrl}}/api/livro/{{livroId}}
+
+### 7. Atualizar Livro
+PUT {{baseUrl}}/api/livro/{{livroId}}
+Content-Type: application/json
+
+{
+  "titulo": "Dom Casmurro - Edição Especial",
+  "editora": "Editora Ática",
+  "edicao": 2,
+  "anoPublicacao": "1899",
+  "autoresIds": [
+    "AUTOR_ID_MACHADO"
+  ],
+  "assuntosIds": [
+    "ASSUNTO_ID_FICCAO",
+    "ASSUNTO_ID_LITERATURA_BRASILEIRA"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_BALCAO",
+      "valor": 49.90
+    },
+    {
+      "tipoCompraId": "TIPO_COMPRA_ID_INTERNET",
+      "valor": 44.90
+    }
+  ]
+}
+
+### 8. Deletar Livro
+DELETE {{baseUrl}}/api/livro/{{livroId}}
+
+### ============================================
+### TESTES DE VALIDAÇÃO
+### ============================================
+
+### Criar Livro - Título vazio (deve falhar)
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "",
+  "editora": "Editora Teste",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "autoresIds": ["AUTOR_ID"],
+  "assuntosIds": ["ASSUNTO_ID"],
+  "valores": []
+}
+
+### Criar Livro - Sem autores (deve falhar)
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Livro Teste",
+  "editora": "Editora Teste",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "autoresIds": [],
+  "assuntosIds": ["ASSUNTO_ID"],
+  "valores": []
+}
+
+### Criar Livro - Sem assuntos (deve falhar)
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Livro Teste",
+  "editora": "Editora Teste",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "autoresIds": ["AUTOR_ID"],
+  "assuntosIds": [],
+  "valores": []
+}
+
+### Criar Livro - Edição inválida (deve falhar)
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Livro Teste",
+  "editora": "Editora Teste",
+  "edicao": 0,
+  "anoPublicacao": "2024",
+  "autoresIds": ["AUTOR_ID"],
+  "assuntosIds": ["ASSUNTO_ID"],
+  "valores": []
+}
+
+### Criar Livro - Ano de publicação com formato inválido (deve falhar)
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Livro Teste",
+  "editora": "Editora Teste",
+  "edicao": 1,
+  "anoPublicacao": "202",
+  "autoresIds": ["AUTOR_ID"],
+  "assuntosIds": ["ASSUNTO_ID"],
+  "valores": []
+}

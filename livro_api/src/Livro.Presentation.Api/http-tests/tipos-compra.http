@@ -1,0 +1,29 @@
+### Variáveis
+@baseUrl = http://localhost:5000
+
+### ============================================
+### TIPOS DE COMPRA (Seed Data - Read Only)
+### ============================================
+
+### Listar Todos os Tipos de Compra
+# Deve retornar 4 registros:
+# - Balcão
+# - Self-Service
+# - Internet
+# - Telefone
+GET {{baseUrl}}/api/tipo-compra
+
+### ============================================
+### INFORMAÇÕES
+### ============================================
+# Os Tipos de Compra são inseridos automaticamente
+# via Seed no startup da aplicação.
+# 
+# IDs esperados (ULIDs):
+# - Balcão
+# - Self-Service  
+# - Internet
+# - Telefone
+#
+# Não há endpoints de Create, Update ou Delete
+# pois são dados de referência do sistema.

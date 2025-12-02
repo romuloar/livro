@@ -1,0 +1,45 @@
+### Variáveis
+@baseUrl = http://localhost:5000
+
+### ⚠️ IMPORTANTE: Execute primeiro todos os outros arquivos .http
+### para criar dados suficientes antes de testar o relatório
+
+### ============================================
+### RELATÓRIO
+### ============================================
+
+### Obter Relatório de Livros
+# Retorna dados da VIEW vw_relatorio_livros com:
+# - Título do livro
+# - Editora
+# - Edição
+# - Ano de Publicação
+# - Autores (concatenados)
+# - Assuntos (concatenados)
+# - Valores por tipo de compra
+GET {{baseUrl}}/api/relatorio/livro
+
+### ============================================
+### INFORMAÇÕES
+### ============================================
+# Este endpoint consome a VIEW do banco de dados
+# que agrupa todas as informações dos livros.
+#
+# A VIEW executa:
+# - GROUP_CONCAT para autores
+# - GROUP_CONCAT para assuntos
+# - Colunas separadas para cada tipo de compra (Balcão, Self-Service, Internet, Telefone)
+#
+# Retorno esperado (exemplo):
+# {
+#   "titulo": "Dom Casmurro",
+#   "editora": "Editora Ática",
+#   "edicao": 1,
+#   "anoPublicacao": "1899",
+#   "autores": "Machado de Assis",
+#   "assuntos": "Ficção, Literatura Brasileira",
+#   "precoBalcao": 45.90,
+#   "precoSelfService": null,
+#   "precoInternet": 39.90,
+#   "precoTelefone": null
+# }

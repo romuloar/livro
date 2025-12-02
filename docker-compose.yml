@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  livro-api:
+    build:
+      context: ./livro_api
+      dockerfile: Dockerfile
+    container_name: livro-api
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    volumes:
+      - ./data:/app/data
+    networks:
+      - livro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  livro-web:
+    build:
+      context: ./livro_presentation_angular
+      dockerfile: Dockerfile
+    container_name: livro-web
+    ports:
+      - "4200:80"
+    depends_on:
+      livro-api:
+        condition: service_started
+    networks:
+      - livro-network
+
+networks:
+  livro-network:
+    driver: bridge
+
+volumes:
+  livro-data:

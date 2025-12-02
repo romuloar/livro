@@ -1,0 +1,98 @@
+### Variáveis
+@baseUrl = http://localhost:5000
+@assuntoId = {{createAssunto.response.body.codAs}}
+
+### ============================================
+### ASSUNTOS
+### ============================================
+
+### 1. Criar Assunto - Ficção
+# @name createAssunto
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Ficção"
+}
+
+### 2. Criar Assunto - Romance
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Romance"
+}
+
+### 3. Criar Assunto - Poesia
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Poesia"
+}
+
+### 4. Criar Assunto - Literatura Brasileira
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Literatura Brasileira"
+}
+
+### 5. Criar Assunto - Autoajuda
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Autoajuda"
+}
+
+### 6. Criar Assunto - Biografia
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Biografia"
+}
+
+### 7. Listar Todos os Assuntos
+GET {{baseUrl}}/api/assunto
+
+### 8. Atualizar Assunto (use o ID retornado do POST)
+PUT {{baseUrl}}/api/assunto/{{assuntoId}}
+Content-Type: application/json
+
+{
+  "descricao": "Ficção Científica"
+}
+
+### 9. Deletar Assunto (use um ID específico)
+DELETE {{baseUrl}}/api/assunto/{{assuntoId}}
+
+### ============================================
+### TESTES DE VALIDAÇÃO
+### ============================================
+
+### Criar Assunto - Descrição vazia (deve falhar)
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": ""
+}
+
+### Criar Assunto - Descrição muito curta (deve falhar)
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Fi"
+}
+
+### Criar Assunto - Descrição muito longa (deve falhar - mais de 20 caracteres)
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Este assunto tem uma descrição muito longa"
+}

@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Relatório de Livros por Autor</h4>
+      <div class="btn-group no-print">
+        <button class="btn btn-primary btn-sm" (click)="exportarPDF()" [disabled]="loading() || relatorio().length === 0">
+          <i class="bi bi-file-pdf"></i> Exportar PDF
+        </button>
+        <button class="btn btn-light btn-sm" (click)="print()" [disabled]="loading() || relatorio().length === 0">
+          <i class="bi bi-printer"></i> Imprimir
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="loading()" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-2">Gerando relatório...</p>
+      </div>
+
+      <div *ngIf="!loading() && error()" class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle"></i> {{ error() }}
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading() && relatorio().length > 0">
+        <table class="table table-striped table-hover table-sm">
+          <thead class="table-dark">
+            <tr>
+              <th>Autor</th>
+              <th>Título</th>
+              <th>Editora</th>
+              <th>Edição</th>
+              <th>Ano</th>
+              <th>Assuntos</th>
+              <th class="text-end">Valor Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of relatorio()">
+              <td><strong>{{ item.autorNome }}</strong></td>
+              <td>{{ item.livroTitulo }}</td>
+              <td>{{ item.editora }}</td>
+              <td>{{ item.edicao }}ª</td>
+              <td>{{ item.anoPublicacao }}</td>
+              <td>
+                <span class="badge bg-secondary me-1" *ngFor="let assunto of item.assuntos">
+                  {{ assunto }}
+                </span>
+              </td>
+              <td class="text-end">{{ formatarValorTotal(item.valores) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!loading() && relatorio().length === 0 && !error()" class="alert alert-info">
+        <i class="bi bi-info-circle"></i> Nenhum dado disponível para o relatório.
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,305 @@
+### ============================================
+### WORKFLOW COMPLETO - TESTE END-TO-END
+### ============================================
+### Este arquivo executa um fluxo completo de testes
+### criando dados relacionados passo a passo
+### ============================================
+
+@baseUrl = http://localhost:5000
+
+### ============================================
+### PASSO 1: VERIFICAR TIPOS DE COMPRA
+### ============================================
+
+### 1.1 - Listar Tipos de Compra (Seed Data)
+# @name getTiposCompra
+GET {{baseUrl}}/api/tipo-compra
+
+### Copie os IDs retornados:
+@tipoBalcao = COLE_ID_BALCAO_AQUI
+@tipoSelfService = COLE_ID_SELFSERVICE_AQUI
+@tipoInternet = COLE_ID_INTERNET_AQUI
+@tipoTelefone = COLE_ID_TELEFONE_AQUI
+
+### ============================================
+### PASSO 2: CRIAR AUTORES
+### ============================================
+
+### 2.1 - Criar Machado de Assis
+# @name autor1
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Machado de Assis"
+}
+
+### 2.2 - Criar Clarice Lispector
+# @name autor2
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Clarice Lispector"
+}
+
+### 2.3 - Criar Paulo Coelho
+# @name autor3
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Paulo Coelho"
+}
+
+### 2.4 - Verificar Autores Criados
+GET {{baseUrl}}/api/autor
+
+### Capturar IDs dos autores
+@autorMachado = {{autor1.response.body.codAu}}
+@autorClarice = {{autor2.response.body.codAu}}
+@autorPaulo = {{autor3.response.body.codAu}}
+
+### ============================================
+### PASSO 3: CRIAR ASSUNTOS
+### ============================================
+
+### 3.1 - Criar Ficção
+# @name assunto1
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Ficção"
+}
+
+### 3.2 - Criar Romance
+# @name assunto2
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Romance"
+}
+
+### 3.3 - Criar Literatura Brasileira
+# @name assunto3
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Literatura Brasileira"
+}
+
+### 3.4 - Criar Autoajuda
+# @name assunto4
+POST {{baseUrl}}/api/assunto
+Content-Type: application/json
+
+{
+  "descricao": "Autoajuda"
+}
+
+### 3.5 - Verificar Assuntos Criados
+GET {{baseUrl}}/api/assunto
+
+### Capturar IDs dos assuntos
+@assuntoFiccao = {{assunto1.response.body.codAs}}
+@assuntoRomance = {{assunto2.response.body.codAs}}
+@assuntoLitBrasileira = {{assunto3.response.body.codAs}}
+@assuntoAutoajuda = {{assunto4.response.body.codAs}}
+
+### ============================================
+### PASSO 4: CRIAR LIVROS
+### ============================================
+
+### 4.1 - Criar Dom Casmurro
+# @name livro1
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "Dom Casmurro",
+  "editora": "Editora Ática",
+  "edicao": 1,
+  "anoPublicacao": "1899",
+  "autoresIds": [
+    "{{autorMachado}}"
+  ],
+  "assuntosIds": [
+    "{{assuntoFiccao}}",
+    "{{assuntoRomance}}",
+    "{{assuntoLitBrasileira}}"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "{{tipoBalcao}}",
+      "valor": 45.90
+    },
+    {
+      "tipoCompraId": "{{tipoInternet}}",
+      "valor": 39.90
+    }
+  ]
+}
+
+### 4.2 - Criar A Hora da Estrela
+# @name livro2
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "A Hora da Estrela",
+  "editora": "Rocco",
+  "edicao": 1,
+  "anoPublicacao": "1977",
+  "autoresIds": [
+    "{{autorClarice}}"
+  ],
+  "assuntosIds": [
+    "{{assuntoFiccao}}",
+    "{{assuntoRomance}}",
+    "{{assuntoLitBrasileira}}"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "{{tipoBalcao}}",
+      "valor": 38.50
+    },
+    {
+      "tipoCompraId": "{{tipoInternet}}",
+      "valor": 32.90
+    },
+    {
+      "tipoCompraId": "{{tipoSelfService}}",
+      "valor": 35.00
+    }
+  ]
+}
+
+### 4.3 - Criar O Alquimista
+# @name livro3
+POST {{baseUrl}}/api/livro
+Content-Type: application/json
+
+{
+  "titulo": "O Alquimista",
+  "editora": "HarperCollins",
+  "edicao": 2,
+  "anoPublicacao": "1988",
+  "autoresIds": [
+    "{{autorPaulo}}"
+  ],
+  "assuntosIds": [
+    "{{assuntoFiccao}}",
+    "{{assuntoAutoajuda}}"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "{{tipoBalcao}}",
+      "valor": 42.00
+    },
+    {
+      "tipoCompraId": "{{tipoInternet}}",
+      "valor": 35.90
+    }
+  ]
+}
+
+### 4.4 - Verificar Livros Criados
+GET {{baseUrl}}/api/livro
+
+### Capturar IDs dos livros
+@livroDomCasmurro = {{livro1.response.body.codl}}
+@livroHoraEstrela = {{livro2.response.body.codl}}
+@livroAlquimista = {{livro3.response.body.codl}}
+
+### ============================================
+### PASSO 5: CONSULTAS E VALIDAÇÕES
+### ============================================
+
+### 5.1 - Buscar Dom Casmurro por ID
+GET {{baseUrl}}/api/livro/{{livroDomCasmurro}}
+
+### 5.2 - Buscar A Hora da Estrela por ID
+GET {{baseUrl}}/api/livro/{{livroHoraEstrela}}
+
+### 5.3 - Buscar O Alquimista por ID
+GET {{baseUrl}}/api/livro/{{livroAlquimista}}
+
+### 5.4 - Obter Relatório Completo
+GET {{baseUrl}}/api/relatorio/livro
+
+### ============================================
+### PASSO 6: ATUALIZAÇÕES
+### ============================================
+
+### 6.1 - Atualizar Dom Casmurro (adicionar mais um tipo de compra)
+PUT {{baseUrl}}/api/livro/{{livroDomCasmurro}}
+Content-Type: application/json
+
+{
+  "titulo": "Dom Casmurro - Edição Especial",
+  "editora": "Editora Ática",
+  "edicao": 2,
+  "anoPublicacao": "1899",
+  "autoresIds": [
+    "{{autorMachado}}"
+  ],
+  "assuntosIds": [
+    "{{assuntoFiccao}}",
+    "{{assuntoRomance}}",
+    "{{assuntoLitBrasileira}}"
+  ],
+  "valores": [
+    {
+      "tipoCompraId": "{{tipoBalcao}}",
+      "valor": 49.90
+    },
+    {
+      "tipoCompraId": "{{tipoInternet}}",
+      "valor": 44.90
+    },
+    {
+      "tipoCompraId": "{{tipoSelfService}}",
+      "valor": 47.00
+    }
+  ]
+}
+
+### 6.2 - Atualizar Autor Machado de Assis
+PUT {{baseUrl}}/api/autor/{{autorMachado}}
+Content-Type: application/json
+
+{
+  "nome": "Machado de Assis (Joaquim Maria)"
+}
+
+### 6.3 - Verificar alterações no relatório
+GET {{baseUrl}}/api/relatorio/livro
+
+### ============================================
+### PASSO 7: LIMPEZA (OPCIONAL)
+### ============================================
+### Descomente para executar exclusões
+
+### 7.1 - Deletar O Alquimista
+# DELETE {{baseUrl}}/api/livro/{{livroAlquimista}}
+
+### 7.2 - Deletar Assunto Autoajuda (deve falhar se livro não foi deletado)
+# DELETE {{baseUrl}}/api/assunto/{{assuntoAutoajuda}}
+
+### 7.3 - Deletar Autor Paulo Coelho (deve falhar se livro não foi deletado)
+# DELETE {{baseUrl}}/api/autor/{{autorPaulo}}
+
+### ============================================
+### FIM DO WORKFLOW
+### ============================================
+### Resultado esperado:
+### - 3 autores criados
+### - 4 assuntos criados
+### - 3 livros criados com relacionamentos N:N
+### - Relatório mostrando todos os dados integrados
+### - 1 livro atualizado com edição diferente
+### - 1 autor atualizado com nome completo
+### ============================================

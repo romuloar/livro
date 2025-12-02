@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0">{{ isEditMode ? 'Editar' : 'Novo' }} Autor</h4>
+    </div>
+    <div class="card-body">
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+      <form [formGroup]="autorForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome *</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            formControlName="nome"
+            [class.is-invalid]="autorForm.get('nome')?.invalid && autorForm.get('nome')?.touched"
+            maxlength="40"
+          />
+          <div *ngIf="autorForm.get('nome')?.invalid && autorForm.get('nome')?.touched" class="invalid-feedback">
+            Nome é obrigatório (máximo 40 caracteres)
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="loading || autorForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="loading">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

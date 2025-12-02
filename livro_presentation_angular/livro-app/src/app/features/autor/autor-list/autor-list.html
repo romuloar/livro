@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Autores</h4>
+      <button class="btn btn-light btn-sm" routerLink="/autores/novo">
+        <i class="bi bi-plus-circle"></i> Novo Autor
+      </button>
+    </div>
+    <div class="card-body">
+      <div *ngIf="loading()" class="text-center py-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading() && error()" class="alert alert-danger">{{ error() }}</div>
+
+      <div *ngIf="!loading()">
+        <table *ngIf="autores().length > 0" class="table table-striped table-hover">
+        <thead>
+          <tr> 
+            <th>Código</th>
+            <th>Nome</th>
+            <th class="text-end">Ações</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let autor of autores()">
+            <td>{{ autor.codAu }}</td>
+            <td>{{ autor.nome }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-primary me-2" [routerLink]="['/autores/editar', autor.codAu]">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteAutor(autor.codAu)">
+                Excluir
+              </button> 
+            </td>
+          </tr>
+        </tbody>
+        </table>
+
+        <div *ngIf="autores().length === 0 && !error()" class="alert alert-info">
+          <i class="bi bi-info-circle me-2"></i>
+          Nenhum autor cadastrado.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

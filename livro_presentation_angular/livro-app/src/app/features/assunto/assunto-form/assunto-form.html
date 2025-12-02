@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0">{{ isEditMode ? 'Editar' : 'Novo' }} Assunto</h4>
+    </div>
+    <div class="card-body">
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+      <form [formGroup]="assuntoForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição *</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricao"
+            formControlName="descricao"
+            [class.is-invalid]="assuntoForm.get('descricao')?.invalid && assuntoForm.get('descricao')?.touched"
+            maxlength="20"
+          />
+          <div *ngIf="assuntoForm.get('descricao')?.invalid && assuntoForm.get('descricao')?.touched" class="invalid-feedback">
+            Descrição é obrigatória (máximo 20 caracteres)
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="loading || assuntoForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="loading">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+### Variáveis
+@baseUrl = http://localhost:5000
+@autorId = {{createAutor.response.body.codAu}}
+
+### ============================================
+### AUTORES
+### ============================================
+
+### 1. Criar Autor - Machado de Assis
+# @name createAutor
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Machado de Assis"
+}
+
+### 2. Criar Autor - Clarice Lispector
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Clarice Lispector"
+}
+
+### 3. Criar Autor - Paulo Coelho
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Paulo Coelho"
+}
+
+### 4. Criar Autor - Jorge Amado
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Jorge Amado"
+}
+
+### 5. Criar Autor - Carlos Drummond de Andrade
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Carlos Drummond de Andrade"
+}
+
+### 6. Listar Todos os Autores
+GET {{baseUrl}}/api/autor
+
+### 7. Atualizar Autor (use o ID retornado do POST)
+PUT {{baseUrl}}/api/autor/{{autorId}}
+Content-Type: application/json
+
+{
+  "nome": "Machado de Assis (Joaquim Maria)"
+}
+
+### 8. Deletar Autor (use um ID específico)
+DELETE {{baseUrl}}/api/autor/{{autorId}}
+
+### ============================================
+### TESTES DE VALIDAÇÃO
+### ============================================
+
+### Criar Autor - Nome vazio (deve falhar)
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": ""
+}
+
+### Criar Autor - Nome muito curto (deve falhar)
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Ab"
+}
+
+### Criar Autor - Nome muito longo (deve falhar - mais de 40 caracteres)
+POST {{baseUrl}}/api/autor
+Content-Type: application/json
+
+{
+  "nome": "Este é um nome extremamente longo que ultrapassa quarenta caracteres"
+}

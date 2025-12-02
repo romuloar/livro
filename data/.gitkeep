@@ -1,0 +1,2 @@
+# Esta pasta é criada automaticamente pelo Docker
+# O banco de dados livro.db será gerado aqui quando rodar docker-compose up

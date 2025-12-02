@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Assuntos</h4>
+      <button class="btn btn-light btn-sm" routerLink="/assuntos/novo">
+        <i class="bi bi-plus-circle"></i> Novo Assunto
+      </button>
+    </div>
+    <div class="card-body">
+      <div *ngIf="loading()" class="text-center py-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading() && error()" class="alert alert-danger">{{ error() }}</div>
+
+      <div *ngIf="!loading()">
+        <table *ngIf="assuntos().length > 0" class="table table-striped table-hover">
+        <thead> 
+          <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+            <th class="text-end">Ações</th>
+          </tr> 
+        </thead>
+        <tbody>
+          <tr *ngFor="let assunto of assuntos()">
+            <td>{{ assunto.codAs }}</td>
+            <td>{{ assunto.descricao }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-primary me-2" [routerLink]="['/assuntos/editar', assunto.codAs]">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteAssunto(assunto.codAs)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+
+        <div *ngIf="assuntos().length === 0 && !error()" class="alert alert-info">
+          <i class="bi bi-info-circle me-2"></i>
+          Nenhum assunto cadastrado.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
